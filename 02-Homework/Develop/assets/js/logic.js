@@ -11,18 +11,32 @@ var submitBtn = document.getElementById("submit");
 var startBtn = document.getElementById("start");
 var initialsEl = document.getElementById("initials");
 var feedbackEl = document.getElementById("feedback");
-
+var titleEl = document.getElementById("question-title")
 // sound effects
 var sfxRight = new Audio("assets/sfx/correct.wav");
 var sfxWrong = new Audio("assets/sfx/incorrect.wav");
 
 function startQuiz() {
   // hide start screen
- 
+    
+    document.getElementById("start-screen").style.display ="none"
+
   // un-hide questions section
+
+    document.getElementById("questions").classList.remove("hide")
 
   // start timer
 
+    timerId = setInterval(function() {
+    time--;
+    timerEl.textContent = time;
+
+    if(time === 0) {
+      quizEnd();
+      
+    }
+
+  }, 1000);
   // show starting time
 
   getQuestion();
@@ -30,13 +44,24 @@ function startQuiz() {
 
 function getQuestion() {
   // get current question object from array
-
+  var currentQuestion = questions[currentQuestionIndex];
   // update title with current question
+  titleEl.textContent = currentQuestion.title
 
+  
+  choicesEl.textContent = choicesEl.title
+  
   // clear out any old question choices
 
   // loop over choices
+  for (var i = 0; i < choices.length; i++) {
+    console.log("yes");
+    var choice = choices[i];
 
+    var li = document.createElement("li");
+    li.textContent = choice;
+    choicesEl.appendChild(li);
+  }
     // create new button for each choice
 
     // attach click event listener to each choice
@@ -76,11 +101,11 @@ function quizEnd() {
   // hide questions section
 }
 
-function clockTick() {
+//function clockTick() {
   // update time
 
   // check if user ran out of time
-}
+
 
 function saveHighscore() {
   // get value of input box
